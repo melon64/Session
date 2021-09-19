@@ -26,14 +26,17 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Color.fromRGBO(44, 84, 55, 1),
       appBar: AppBar(
         flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color.fromRGBO(179, 230, 181, 1), Color.fromRGBO(150, 230, 181, 1)],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft,
-                ),
-              ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(179, 230, 181, 1),
+                Color.fromRGBO(150, 230, 181, 1)
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
             ),
+          ),
+        ),
         // backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: Text('Session'),
@@ -54,6 +57,14 @@ class _SignInState extends State<SignIn> {
           key: _formKey,
           child: Column(
             children: [
+              Text(
+                'Session',
+                style: TextStyle(
+                  fontSize: 48,
+                  color: Colors.green,
+                  fontFamily: 'Roboto' 
+                ),
+              ),
               SizedBox(height: 20.0),
               TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
@@ -90,7 +101,8 @@ class _SignInState extends State<SignIn> {
                     }
                   }),
               SizedBox(height: 12.0),
-              Text(error, style: TextStyle(color: Colors.green, fontSize: 14.0)),
+              Text(error,
+                  style: TextStyle(color: Colors.green, fontSize: 14.0)),
             ],
           ),
         ),

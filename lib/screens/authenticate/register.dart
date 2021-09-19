@@ -23,11 +23,24 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
+      backgroundColor: Color.fromRGBO(44, 84, 55, 1),
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(179, 230, 181, 1),
+                Color.fromRGBO(150, 230, 181, 1)
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            ),
+          ),
+        ),
+        // backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: Text('Sign up'),
+        centerTitle: true,
         actions: <Widget>[
           TextButton.icon(
             icon: Icon(Icons.person),
@@ -81,7 +94,8 @@ class _RegisterState extends State<Register> {
                     }
                   }),
               SizedBox(height: 12.0),
-              Text(error, style: TextStyle(color: Colors.red, fontSize: 14.0)),
+              Text(error,
+                  style: TextStyle(color: Colors.green, fontSize: 14.0)),
             ],
           ),
         ),

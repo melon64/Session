@@ -4,6 +4,7 @@ import 'package:study/model/userFB.dart';
 import 'package:study/screens/authenticate/authenticate.dart';
 import 'package:study/screens/home.dart';
 import 'package:provider/provider.dart';
+import 'package:study/screens/profile.dart';
 import 'package:study/utils/user_preferences.dart';
 
 class Wrapper extends StatelessWidget {

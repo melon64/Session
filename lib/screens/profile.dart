@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +9,17 @@ import 'dart:async';
 import 'package:study/screens/home.dart';
 import 'package:study/widgets/countup_widget.dart';
 
-
 class Profile extends StatefulWidget {
-  const Profile({ Key? key }) : super(key: key);
+  const Profile({Key? key}) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   String? name;
   int? time;
   int? points;
@@ -36,25 +34,17 @@ class _ProfileState extends State<Profile> {
     name = userdocument['name'];
     time = userdocument['time'];
     points = userdocument['points'];
+    setState(() {
+      this.name = name;
+      this.time = time;
+      this.points = points;
+    });
   }
-  
-
-  // getEmail() async {
-  //       FirebaseFirestore.instance
-  //           .collection('Users')
-  //           .doc((await FirebaseAuth.instance.currentUser!).uid)
-  //           .get()
-  //           .then((DocumentSnapshot data) {
-  //         setState(() {
-  //           email = data['email'];
-  //         });
-  //       });
-  // }
 
   @override
   void initState() {
     super.initState();
-     getSingle();
+    getSingle();
     // getEmail();
   }
 
@@ -64,39 +54,53 @@ class _ProfileState extends State<Profile> {
 
     return Scaffold(
       appBar: AppBar(
-            title: Text('Your Profile'),
-            //centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()),);
-              },
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.timer),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()),);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.logout),
-                onPressed: () async {
-                  await _auth.signOut();
-                },
-              )
-            ],
-            //backgroundColor: Colors.purple,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color.fromRGBO(179, 230, 181, 1), Color.fromRGBO(150, 230, 181, 1)],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft,
-                ),
-              ),
-            ),
+        title: Text('Your Profile'),
+        //centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.person),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
+          },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.timer),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Home()),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await _auth.signOut().then((res) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Wrapper()),
+                );
+              });
+            },
+          )
+        ],
+        //backgroundColor: Colors.purple,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(179, 230, 181, 1),
+                Color.fromRGBO(150, 230, 181, 1)
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            ),
+          ),
+        ),
+      ),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
@@ -112,8 +116,8 @@ class _ProfileState extends State<Profile> {
   Widget buildName() => Column(
         children: [
           Text(
-              name ?? 'username',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48),
+            name ?? 'username',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48),
           ),
           const SizedBox(height: 4),
           Text(
@@ -122,7 +126,7 @@ class _ProfileState extends State<Profile> {
           )
         ],
       );
-  
+
   Widget buildPoints() => Column(
         children: [
           Row(
@@ -133,22 +137,17 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(20)
-                  ),
-                child: Countup(
-                  begin: 0,
-                  end: time?.toDouble() ?? 0,
-                  duration: Duration(seconds: 3),
-                  separator: ',',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white
-                  ),
-                )
-              ),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Countup(
+                    begin: 0,
+                    end: time?.toDouble() ?? 0,
+                    duration: Duration(seconds: 3),
+                    separator: ',',
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                  )),
             ],
           ),
           const SizedBox(height: 4),
@@ -160,22 +159,17 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(20)
-                  ),
-                child: Countup(
-                  begin: 0,
-                  end: points?.toDouble() ?? 0,
-                  duration: Duration(seconds: 3),
-                  separator: ',',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white
-                  ),
-                )
-              ),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Countup(
+                    begin: 0,
+                    end: points?.toDouble() ?? 0,
+                    duration: Duration(seconds: 3),
+                    separator: ',',
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                  )),
             ],
           ),
         ],
