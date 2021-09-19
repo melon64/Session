@@ -1,4 +1,4 @@
 # Session
+A Flutter app that tracks study habits and rewards them with points.
 
- A Flutter app that tracks study habits and rewards them with points.
-Made for HTN 2021.
+Made for [HTN 2021](https://hackthenorth2021.devpost.com/).
